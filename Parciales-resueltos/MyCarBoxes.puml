@@ -1,0 +1,68 @@
+@startuml
+class DiscOOrd{
+    +Discoord()
+    +canalConMayorCantidadDeMensajes():Canal
+    +servidorConMayorCantidadDeUsuarios():Servidor
+}
+DiscOOrd --> "0..*"Servidor : servidores
+DiscOOrd --> "0..*"Usuario : usuarios
+class Usuario{
+    -email:String
+    +Usuario(email:string,membresia:Membresia)
+    +agregarAmigo(usuario:Usuario)
+    +crearServidor()
+    +crearCanal()
+    +unirseAcanal(canal:Canal)
+    +unirseAServidor(servidor:Servidor)
+    +enviarMensajeEnCanal(canal:Canal,servidor:Servidor)
+    +enviarMensajeAunAmigo(amigo:Usuario)
+    +
+}
+Usuario --> "1"Modo : modo
+Usuario -->"1..*"Servidor : servidores
+Usuario -->"0..*"Usuario : amigos
+Usuario -->"0..*"Canal : canales
+Usuario -->"1"Membresia : membresia
+abstract class Membresia{
+    -precio:real
+    +Membresia(precio:real)
+}
+class MembresiaGratis{
+    +Membresia()
+}
+MembresiaGratis --|> Membresia
+class MembresiaNitro{
+    +MembresiaNitro(precio:real)
+}
+MembresiaNitro --|> Membresia
+class Mensaje{
+    -contenido:String
+    +Mensaje()
+}
+Mensaje --> "1"Usuario : usuario
+class Servidor{
+    -nombre:String
+    -configuracion:String
+    +Servidor()
+    +canalConMayorCantidadDeMensajes():Canal
+}
+Servidor -->"1..*"Canal : canales
+
+class Canal{
+    -nombre:String
+    +Canal()
+    +cantidadDeMensajes():integer
+}
+Canal --> "0..*"Mensaje : mensajes
+abstract class Modo{
+
+}
+
+
+class ModoStreaming{
+}
+ModoStreaming --|> Modo
+class ModoNormal{
+}
+ModoNormal --|> Modo
+@enduml

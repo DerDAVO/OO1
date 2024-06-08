@@ -1,0 +1,41 @@
+@startuml
+class Cliente{
+    -nombre:String
+    -email:String
+    -fecha:Date
+    +Cliente(nombre:string,email:string)
+}
+Cliente-->"0..*"Pedido:pedidos
+class Producto{
+    -nombre:String
+    -costoUnitario:real
+    -descripcion:real
+    +Producto(nombre:String,costoUnitario,descripcion:String)
+}
+class Importado{
+    -paisOrigen:String
+    +Importado(nombre:String,costoUnitario,descripcion:String,paisOrigen:String)
+}
+class Nacional{
+    +Nacional(nombre:String,costoUnitario,descripcion:String)
+}
+Nacional--|>Producto
+Importado--|>Producto
+
+class Item{
+    -cantidad:integer
+    +Item(cantidad:integer)
+}
+Item-->"1"Producto:producto
+
+class Pedido{
+    -fecha:Date
+    +Pedido()
+}
+Pedido-->"1..*"Item:items
+class Sistema{
+    +Sistema()
+}
+Sistema-->"0..*"Cliente:clientes
+Sistema-->"0..*"Producto:productos
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+abstract class Bien{
+    -valor:real
+    +Bien(valor:real):Bien
+    {abstract}+calcularImpuestoApagar():real
+}
+Bien --> "0..*"Contribuyente:contribuyentes
+class Contribuyente{
+
+}
+Contribuyente --> "0..*"Bien:bienes
+class BienInmueble{
+
+}
+
+class BienAutomotor{
+
+}
+
+class AgenciaDeRecaudacion{
+
+}
+@enduml

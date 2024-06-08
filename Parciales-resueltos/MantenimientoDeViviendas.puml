@@ -1,0 +1,68 @@
+@startuml
+
+ class Cliente{
+    -nombre:String
+    -direccion:String
+    +Cliente(nombre:String,direccion:String)
+    +contratarDeFormaProlongada(fecha:date,servicio:Servicio,cantDias:integer):ContratoProlongado
+    +contratarUnicaVez(fecha:date,servicio:Servicio)
+    +serviciosMayoresA(valor:real):integer
+}
+Cliente-->"0..*"Contrato:contratos
+abstract class Servicio{
+    -precioPoHora:real
+    -cantHoras:integer
+
+    +Servicio(precioPoHora:real,cantHoras:integer)
+    +calcularCostos():real
+    {abstract}+montoAabonar():real
+    +serviciosMayorA(valor:real):boolean
+}
+
+class Limpieza{
+    -tarifaMinima:real
+    +Limpieza(precioPoHora:real,cantHoras:integer,tarifaMinima:real)
+    +montoAabonar():real
+}
+Limpieza--|>Servicio
+
+class Parquizacion{
+    -costoMantenimiento:real
+    -cantMaquinas:integer
+    +Parquizacion(precioPoHora:real,cantHoras:integer,cantMaquinas:integer,costoMantenimiento:real)
+    +montoAabonar():real
+}
+Parquizacion--|>Servicio
+
+abstract class Contrato{
+    -fecha:Date
+    +Contrato(fecha:Date,cliente:Cliente,servicio:Servicio)
+    {abstract}+montoAPagar():real
+    +servicioMayoreA(valor:real):boolean
+}
+Contrato-->"1"Servicio:servicio
+
+class ContratoProlongado{
+    -cantDias:integer
+    +ContratoProlongado(fecha:Date,cliente:Cliente,servicio:Servicio,cantDias:integer)
+    +montoAPagar():real
+}
+ContratoProlongado--|>Contrato
+class ContratoUnico{
+    +ContratoUnico(fecha:Date,cliente:Cliente,servicio:Servicio)
+    +montoAPagar():real
+}
+ContratoUnico--|>Contrato
+
+class Sistema{
+    +Sistema()
+    +registrarCliente(nombre:string,doreccion)
+    +registrarServicioDeLimpieza(precioPorHora:real,cantHoras:integer,tarifaMinima:real):Limpieza
+    +registrarServicioDeParquizacion(precioPorHora:real,cantHoras:integer,tarifaMinima:real,cantMaquinas:integer,costoMantenimiento:real):Parquizacion
+    +serviciosMayoresAUnValor(valor:real):integer
+}
+Sistema-->"0..*"Servicio:servicios
+Sistema-->"0..*"Cliente:clientes
+
+
+@enduml

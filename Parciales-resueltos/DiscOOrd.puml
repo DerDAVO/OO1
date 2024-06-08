@@ -1,0 +1,27 @@
+@startuml
+class Usuario{
+    -email:String
+    -nitro:boolean
+    -streaming:boolean
+    +Cuenta()
+    +agregarAmigo(usuario:Usuario)
+}
+class Mensaje{
+    -contenido:String
+    +Mensaje()
+}
+class Servidor{
+    -nombre:String
+    +Servidor()
+}
+Servidor -->"1..*"Usuario : usuarios
+Servidor -->"1..*"Canal : canales
+
+class Canal{
+    -nombre:String
+    +Canal()
+}
+Canal --> "0..*"Mensaje : mensajes
+
+
+@enduml

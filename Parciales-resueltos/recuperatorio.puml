@@ -1,0 +1,46 @@
+@startuml diagrama
+class Veterinario {
+    -nombre:string
+    -ingreso:Date
+    -honorarios:real
+
+    +Veterinario(nombre:String,honorarios:real)
+}
+class Mascota{
+    -nombre:String
+    -fechaNacimiento:Date
+    -especie:String
+}
+Mascota --> Servicio
+abstract class Servicio{
+    -fecha:date
+    {abstract}+calcularCostos():real
+}
+
+abstract class Atencion{
+    -precioDescartables:real
+
+    + otrosCostos():real
+}
+class Guarderia{
+    +Guarderia
+}
+Guarderia--|>Servicio
+
+ Servicio<|--Atencion
+Atencion --> Veterinario
+class Vacunacion{
+    +Vacunacion()
+}
+class ConsultaMedica{
+    +ConsultaMedica()
+}
+ConsultaMedica--|>Atencion
+Vacunacion--|> Atencion
+
+class Sistema{
+    +Sistema()
+}
+Sistema-->"0..*"Veterinario:vetrinarios
+Sistema-->"0..*"Mascota:mascotas
+@enduml

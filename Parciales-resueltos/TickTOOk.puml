@@ -1,0 +1,23 @@
+@startuml
+class Cuenta{
+
+}
+abstract class Cuenta{
+
+}
+Cuenta -->"0..*"Cuenta:seguidos
+class CuentaEmpresarial{
+    numeroDeContacto:integer
+}
+Cuenta --> "0..*"Producto:productos
+CuentaEmpresarial --|> Cuenta
+class Producto{
+    -descripcion:string
+    -precio:real
+}
+class Video{
+    -hashtag:string
+    
+}
+Video --> "1" Cuenta:usuario
+@enduml
