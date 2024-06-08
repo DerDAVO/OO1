@@ -1,5 +1,6 @@
 # Orientacion a Objetos 1
 Material y ejercicios resueltos de la cursada de Orientacion a objetos 1 
+![Mi GIF](https://github.com/DerDAVO/OO1/blob/main/media/Java-Logo-1996.png)
 <details>
   <summary>Links útiles</summary>
   
