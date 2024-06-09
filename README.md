@@ -1,7 +1,7 @@
-<html>
-  <h1 style="text-aling: center;"> Orientacion a Objetos 1 </h1>
-  <img src="https://github.com/DerDAVO/OO1/blob/main/media/Java-Logo-1996.png" style="with: 50px;">  
-</html>
+  <h1 align="center"> Orientacion a Objetos 1 </h1>
+  <div align="center">
+        <img src="https://github.com/DerDAVO/OO1/blob/main/media/java-icon.png">  
+  </div>
 <details>
   <summary>Links útiles</summary>
   
