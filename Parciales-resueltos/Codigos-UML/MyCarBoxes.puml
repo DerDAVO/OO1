@@ -1,68 +1,65 @@
-@startuml
-class DiscOOrd{
-    +Discoord()
-    +canalConMayorCantidadDeMensajes():Canal
-    +servidorConMayorCantidadDeUsuarios():Servidor
+@startuml diagrama
+
+class MyCarBoxes{
+    +MyCarBoxes():MyCarBoxes
+    +darDeAltaUnEmpleado(empleado:Empleado)
+    +darDeAltaUnRepuesto(repuesto:Repuesto):Repuesto
+    +registrarUnaOrden(orden:Orden):Orden
+    -tienePatenteMasDe12Meses(orden:Orden):boolean
+    -facturar(ordenAfacturar:Orden):Factura
+    +facturarOrdenes(ordenes:Orden[*]):Factura[*]
 }
-DiscOOrd --> "0..*"Servidor : servidores
-DiscOOrd --> "0..*"Usuario : usuarios
-class Usuario{
-    -email:String
-    +Usuario(email:string,membresia:Membresia)
-    +agregarAmigo(usuario:Usuario)
-    +crearServidor()
-    +crearCanal()
-    +unirseAcanal(canal:Canal)
-    +unirseAServidor(servidor:Servidor)
-    +enviarMensajeEnCanal(canal:Canal,servidor:Servidor)
-    +enviarMensajeAunAmigo(amigo:Usuario)
-    +
-}
-Usuario --> "1"Modo : modo
-Usuario -->"1..*"Servidor : servidores
-Usuario -->"0..*"Usuario : amigos
-Usuario -->"0..*"Canal : canales
-Usuario -->"1"Membresia : membresia
-abstract class Membresia{
-    -precio:real
-    +Membresia(precio:real)
-}
-class MembresiaGratis{
-    +Membresia()
-}
-MembresiaGratis --|> Membresia
-class MembresiaNitro{
-    +MembresiaNitro(precio:real)
-}
-MembresiaNitro --|> Membresia
-class Mensaje{
-    -contenido:String
-    +Mensaje()
-}
-Mensaje --> "1"Usuario : usuario
-class Servidor{
+MyCarBoxes-->"0..*"Empleado:-empleados
+MyCarBoxes-->"0..*"Repuesto:-repuestos
+MyCarBoxes-->"0..*"Orden:-ordenes
+class Empleado {
     -nombre:String
-    -configuracion:String
-    +Servidor()
-    +canalConMayorCantidadDeMensajes():Canal
+    -valorPoHora:real
+    +Empleado(nombre:string,valorPorHora:real)
+    +getValorPorHora():real
 }
-Servidor -->"1..*"Canal : canales
+class Repuesto{
+    -fechaDeFabricacion:date
+    -costo:real
+    -nombre:string
+    +Repuesto(costo:real,nombre:Stiring,fechaDeFabricacion:date)
+    +getCosto():real
+    +antiguedad(anios:integer):boolean
+} 
+abstract class Orden{
+    -patente:string
+    -fecha:date
+    +Orden(patente:date,fecha:date,repuesto:Repuesto[*])
+    +getPatente():real
+    +calcularCosto():real
+    +{abstract}misCostos():real
+    +{abstract}incrementoDeGanancia():real
+    +costoRepuestos():real
+    +facturar()
+}
+Orden -->"0..*" Repuesto:-repuestos
+class Factura{
+    -patente:String
+    -montoFinal:real
+    -descuento:real
+    -fecha:date
+    +Factura(patente:string,descuento:real,montoFinal:real)
 
-class Canal{
-    -nombre:String
-    +Canal()
-    +cantidadDeMensajes():integer
 }
-Canal --> "0..*"Mensaje : mensajes
-abstract class Modo{
-
+class OrdenDeCompra{
+    +OrdenDeCompra(patente:String,repuestos:Repuesto[*])
+    -cumpleAntiguedad(antiguedad:integer):boolean
+    +misCostos():real
+    +incrementoDeGanancia():real
 }
-
-
-class ModoStreaming{
+OrdenDeCompra --|> Orden
+class OrdenDeReparacion{
+    -descripcion:string
+    -horasNecesarias:integer
+    +OrdenDeReparacion(patente:string,repuestos:Repuesto[*],descripcion:string,empleados:Empleado[*],horasNecesarias:integer)
+    +misCostos():real
+    +incrementoDeGanancia():real
 }
-ModoStreaming --|> Modo
-class ModoNormal{
-}
-ModoNormal --|> Modo
+OrdenDeReparacion -->"0..*" Empleado:-empleados
+OrdenDeReparacion --|> Orden
 @enduml
